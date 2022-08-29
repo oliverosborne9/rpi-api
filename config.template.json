@@ -1,0 +1,26 @@
+{
+  "containers": {
+    "blue": {
+      "minusPin": 0,
+      "plusPin": 0,
+      "signalPin": 0
+    },
+    "green": {
+      "minusPin": 0,
+      "plusPin": 0,
+      "signalPin": 0
+    },
+    "red": {
+      "minusPin": 0,
+      "plusPin": 0,
+      "signalPin": 0
+    }
+  },
+  "dispensing": {
+    "method": ""
+  },
+  "scales": {
+    "model": "",
+    "path": ""
+  }
+}

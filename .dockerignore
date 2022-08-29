@@ -1,0 +1,8 @@
+venv/
+*.egg-info/
+__pycache__/
+.git/
+
+README.md
+sonar-project.properties
+.pre-commit-config.yaml

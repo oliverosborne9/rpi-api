@@ -1,0 +1,11 @@
+celery==5.1.2
+click==7.1.2
+dataclasses-json==0.5.2
+Flask==2.0.1
+hid==1.0.4
+loguru==0.5.3
+Pint==0.17
+urllib3==1.25.11
+gpiozero==1.6.2
+pigpio==1.78
+redis==4.3.4

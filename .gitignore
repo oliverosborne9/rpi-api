@@ -1,0 +1,8 @@
+__pycache__/
+venv/
+*.egg-info
+.vscode/
+*config.json
+.scannerwork
+# Scales library not included because it is IP of Recycleye
+mechanic/scales/hid.py
