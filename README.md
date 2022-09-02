@@ -1,3 +1,5 @@
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-orange.svg)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api)
+
 # mechanic
 
 Device module (Python package and Docker container) with HTTP API for reading from electronic scales and controlling servo motors. Designed for Raspberry Pi, running a Debian-based distribution.
