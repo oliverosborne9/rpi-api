@@ -1,6 +1,5 @@
 import json
-import random
-import string
+import secrets
 
 from flask import Flask
 from loguru import logger
@@ -16,9 +15,7 @@ def start_app():
 
     start_bg_celery_worker()
 
-    app.secret_key = "".join(
-        random.choices(string.ascii_uppercase + string.digits, k=20)
-    )
+    app.secret_key = secrets.token_urlsafe(16)
 
     app.config["TWIN"] = ModuleTwin.from_local()
 
