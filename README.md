@@ -1,4 +1,4 @@
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-orange.svg)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=oliverosborne9_rpi_api&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=oliverosborne9_rpi_api&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api)
 
 # mechanic
 
