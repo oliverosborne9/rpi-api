@@ -1,0 +1,265 @@
+---
+openapi: "3.0.3"
+info:
+  version: "1.0.0"
+  title: "Mechanic - Raspberry Pi API"
+  contact:
+    name: "Oliver Osborne"
+    url: "https://github.com/oliverosborne9"
+servers:
+  - url: "http://mechanic:7000/api/v1"
+tags:
+  - name: dispensing
+    description: "Continuous Rotation Servo Motor Operations"
+  - name: meta
+    description: "General App and Config Information"
+  - name: scales
+    description: "Electronic Scale Operations"
+paths:
+  /read:
+    get:
+      tags:
+        - scales
+      summary: Read Default Scales
+      description: |-
+        Read the current value of the default scales (specified in the API twin)
+      responses:
+        200:
+          $ref: '#/components/responses/SuccessfulScalesReading'
+        404:
+          $ref: '#/components/responses/FailedScalesReading'
+  /read/{name}:
+    get:
+      parameters:
+        - in: path
+          name: name
+          required: true
+          description: Name of the scales to read
+          schema:
+            type: string
+            example: scales1
+      tags:
+        - scales
+      summary: Read Scales
+      description: |-
+        Read the current value of the scales,
+        where `name` is appended to /dev/
+        to query device connected to host Raspberry Pi
+      responses:
+        200:
+          $ref: '#/components/responses/SuccessfulScalesReading'
+        404:
+          $ref: '#/components/responses/FailedScalesReading'
+  /health:
+    get:
+      tags:
+        - meta
+      summary: Health of the HTTP Server
+      description: Confirm the app is up and running
+      responses:
+        200:
+          description: Successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: healthy
+  /twin:
+    get:
+      tags:
+        - meta
+      summary: Twin Configuring the App
+      description: |-
+        Dictionary of app configuration, including scales and servo motor setup
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Twin'
+  /ready:
+    get:
+      tags:
+        - meta
+        - scales
+      summary: Hardware Readiness for Dispensing
+      description: |-
+        Verify that the scales are available, and ready for dispensing
+      responses:
+        200:
+          description: Successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ready
+        404:
+          $ref: '#/components/responses/ScalesUnavailable'
+  /dispense/async:
+    post:
+      tags:
+        - dispensing
+        - scales
+      summary: Dispense from a Container
+      description: |-
+        Queue a task to dispense, from one of the three available containers
+      responses:
+        202:
+          description: Task accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  task_id:
+                    $ref: '#/components/schemas/TaskID'
+        424:
+          $ref: '#/components/responses/ScalesUnavailable'
+  /dispense/status/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            $ref: '#/components/schemas/TaskID'
+      tags:
+        - dispensing
+        - meta
+      summary: Progress of Celery Task
+      description: |-
+        Get status and metrics for a dispensing task,
+        where `id` is Celery task ID
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskStatus'
+components:
+  schemas:
+    Twin:
+      type: object
+      properties:
+        containers:
+          $ref: '#/components/schemas/ContainerObject'
+        dispensing:
+          type: object
+          properties:
+            method:
+              type: string
+              example: "DUMMY"
+        scales:
+          type: object
+          properties:
+            model:
+              type: string
+              example: "FAKE"
+            path:
+              type: string
+              example: "/dev/scales1"
+    ContainerObject:
+      type: object
+      properties:
+        blue:
+          $ref: '#/components/schemas/PinGroup'
+        green:
+          $ref: '#/components/schemas/PinGroup'
+        red:
+          $ref: '#/components/schemas/PinGroup'
+    PinGroup:
+      type: object
+      properties:
+        minusPin:
+          type: integer
+          description: Negative voltage GPIO pin, for controlling direction
+          format: int64
+          example: 1
+        plusPin:
+          type: integer
+          description: Positive voltage GPIO pin, for controlling direction
+          format: int64
+          example: 2
+        signalPin:
+          type: integer
+          description: Signal GPIO pin, for controlling speed
+          format: int64
+          example: 3
+    ScalesReading:
+      type: object
+      properties:
+        mass:
+          type: integer
+          description: Mass reading from the scales, in grams
+          format: int64
+          example: 96
+        name:
+          type: string
+          description: |-
+            Name of the scales, derived by location (name in /dev/{name})
+          example: "scales1"
+        status:
+          type: string
+          example: "ok"
+        time:
+          type: string
+          description: UTC time of scale reading
+          format: datetime
+          example: "2000-01-01 00:00:00.000000"
+    TaskID:
+      type: string
+      description: |-
+        A Celery task ID, a UUID comprising 32 hexadecimal numbers,
+        separated by 4 dashes
+      example: a865ef86-244d-47b1-8dcf-38310631d793
+    TaskStatus:
+      type: object
+      properties:
+        current:
+          type: integer
+          description: Cumulative total grams dispensed so far in job
+          format: int64
+          example: 18
+        state:
+          type: string
+          description: |-
+            Task state: "PENDING", "PROGRESS", "FAILURE" or "SUCCESS"
+          example: "PROGRESS"
+        status:
+          type: integer
+          format: int64
+          example: 1
+        total:
+          type: integer
+          description: Total grams to dispense for completion of job
+          format: int64
+          example: 18
+  responses:
+    ScalesUnavailable:
+      description: Scales offline
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: scales1 UNAVAILABLE
+    SuccessfulScalesReading:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ScalesReading'
+    FailedScalesReading:
+      description: Scales offline
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ScalesReading'
+          examples:
+            Failed:
+              value:
+                mass: 0
+                name: scales1
+                status: unavailable
+                time: "2000-01-01 00:00:00.000000"
