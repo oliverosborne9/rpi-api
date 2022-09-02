@@ -1,3 +1,5 @@
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=oliverosborne9_rpi_api&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=oliverosborne9_rpi_api&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api)
+
 # mechanic
 
 Device module (Python package and Docker container) with HTTP API for reading from electronic scales and controlling servo motors. Designed for Raspberry Pi, running a Debian-based distribution.
