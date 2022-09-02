@@ -1,3 +1,4 @@
+---
 openapi: "3.0.3"
 info:
   version: "1.0.0"
@@ -8,17 +9,17 @@ info:
 servers:
   - url: "http://mechanic:7000/api/v1"
 tags:
-- name: dispensing
-  description: "Continuous Rotation Servo Motor Operations"
-- name: meta
-  description: "General App and Config Information"
-- name: scales
-  description: "Electronic Scale Operations"
+  - name: dispensing
+    description: "Continuous Rotation Servo Motor Operations"
+  - name: meta
+    description: "General App and Config Information"
+  - name: scales
+    description: "Electronic Scale Operations"
 paths:
   /read:
     get:
       tags:
-      - scales
+        - scales
       summary: Read Default Scales
       description: |-
         Read the current value of the default scales (specified in the API twin)
@@ -38,10 +39,12 @@ paths:
             type: string
             example: scales1
       tags:
-      - scales
+        - scales
       summary: Read Scales
       description: |-
-        Read the current value of the scales, where `name` is appended to /dev/ to query device connected to host Raspberry Pi
+        Read the current value of the scales,
+        where `name` is appended to /dev/
+        to query device connected to host Raspberry Pi
       responses:
         200:
           $ref: '#/components/responses/SuccessfulScalesReading'
@@ -50,7 +53,7 @@ paths:
   /health:
     get:
       tags:
-      - meta
+        - meta
       summary: Health of the HTTP Server
       description: Confirm the app is up and running
       responses:
@@ -64,9 +67,10 @@ paths:
   /twin:
     get:
       tags:
-      - meta
+        - meta
       summary: Twin Configuring the App
-      description: Dictionary of app configuration, including scales and servo motor setup
+      description: |-
+        Dictionary of app configuration, including scales and servo motor setup
       responses:
         200:
           description: Successful operation
@@ -77,8 +81,8 @@ paths:
   /ready:
     get:
       tags:
-      - meta
-      - scales
+        - meta
+        - scales
       summary: Hardware Readiness for Dispensing
       description: |-
         Verify that the scales are available, and ready for dispensing
@@ -124,7 +128,9 @@ paths:
         - dispensing
         - meta
       summary: Progress of Celery Task
-      description: Get status and metrics for a dispensing task, where `id` is Celery task ID
+      description: |-
+        Get status and metrics for a dispensing task,
+        where `id` is Celery task ID
       responses:
         200:
           description: Successful operation
@@ -191,7 +197,8 @@ components:
           example: 96
         name:
           type: string
-          description: Name of the scales, derived by location (name in /dev/{name})
+          description: |-
+            Name of the scales, derived by location (name in /dev/{name})
           example: "scales1"
         status:
           type: string
@@ -217,7 +224,8 @@ components:
           example: 18
         state:
           type: string
-          description: Task state - "PENDING", "PROGRESS", "FAILURE" or "SUCCESS"
+          description: |-
+            Task state: "PENDING", "PROGRESS", "FAILURE" or "SUCCESS"
           example: "PROGRESS"
         status:
           type: integer
