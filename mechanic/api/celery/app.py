@@ -2,6 +2,8 @@ from threading import Thread
 
 from celery import Celery
 
+REDIS_CONNECTION_STRING = "redis://redis:6379/0"
+
 
 def make_celery() -> Celery:
     """
@@ -9,7 +11,7 @@ def make_celery() -> Celery:
     Depends on a running Redis database, working with defaults from official Redis Docker image.
     """
     # Container name and therefore host redis, exposed port for db 6379, hence redis:6379
-    celery_app = Celery(backend="redis://redis:6379/0", broker="redis://redis:6379/0")
+    celery_app = Celery(backend=REDIS_CONNECTION_STRING, broker=REDIS_CONNECTION_STRING)
     celery_app.conf.update(
         {
             "imports": ("mechanic.api.celery.tasks"),
@@ -17,7 +19,7 @@ def make_celery() -> Celery:
             "result_serializer": "json",
             "accept_content": ["json"],
             "worker_concurrency": 1,
-            "result_backend": "redis://redis:6379/0",
+            "result_backend": REDIS_CONNECTION_STRING,
         },
     )
     return celery_app
