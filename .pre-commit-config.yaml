@@ -31,3 +31,7 @@ repos:
     hooks:
       - id: bandit
         args: ["--skip=B311", "--skip=B101"]
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.17.0
+    hooks:
+      - id: yamllint
