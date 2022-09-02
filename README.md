@@ -4,6 +4,11 @@
 
 Device module (Python package and Docker container) with HTTP API for reading from electronic scales and controlling servo motors. Designed for Raspberry Pi, running a Debian-based distribution.
 
+## API Documentation
+
+Documentation for the RPi mechanic module can be found [here](https://oliverosborne9.github.io/rpi_api/).
+
+
 ## Setup
 
 First, run the following command natively on the shell of your Raspberry Pi:
