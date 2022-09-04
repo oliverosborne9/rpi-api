@@ -1,6 +1,8 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=oliverosborne9_rpi_api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=oliverosborne9_rpi_api&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=oliverosborne9_rpi_api&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=oliverosborne9_rpi_api)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/oliverosborne9/rpi-api/main.svg)](https://results.pre-commit.ci/latest/github/oliverosborne9/rpi-api/main)
+
 
 # mechanic
 
