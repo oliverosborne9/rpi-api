@@ -3,7 +3,6 @@ from http import HTTPStatus
 from flask import Blueprint, current_app, jsonify
 from mechanic.config.twin import ModuleTwin
 from mechanic.dispense.methods import DispenseTaskConfig
-from mechanic.scales.hid import ScaleReadError
 from mechanic.scales.models import SCALES_MODELS
 
 dispense_blueprint = Blueprint("dispense", __name__)
@@ -21,7 +20,7 @@ def dispense_async():
     try:
         if scales.get_status() == "unavailable":
             return return_tuple
-    except ScaleReadError:
+    except Exception:
         return return_tuple
 
     from mechanic.api.celery.tasks import dispense
