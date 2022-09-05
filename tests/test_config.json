@@ -1,0 +1,27 @@
+{
+    "scales": {
+        "path": "/dev/scales99",
+        "model": "FAKE"
+    },
+    "dispensing": {
+        "method": "DUMMY"
+    },
+    "containers": {
+        "red": {
+            "plusPin": 18,
+            "minusPin": 17,
+            "signalPin": 16
+        },
+        "green": {
+            "plusPin": 12,
+            "minusPin": 11,
+            "signalPin": 10
+        },
+        "blue": {
+            "plusPin": 6,
+            "minusPin": 5,
+            "signalPin": 4
+        }
+    },
+    "useless_key": "useless_value"
+}
