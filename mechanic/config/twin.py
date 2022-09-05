@@ -91,11 +91,11 @@ class ModuleTwin:
     scales: ScalesConfig = field(default_factory=ScalesConfig)
 
     @classmethod
-    def from_local(cls, json_file: Union[str, Path] = "config.json") -> "ModuleTwin":
+    def from_file(cls, json_file_path: Union[str, Path]) -> "ModuleTwin":
         """
         :param json_file: Path to the JSON file containing configuration
         :return: The loaded module twin, used to configure the app
         """
-        with open(json_file, "r") as file:
+        with open(json_file_path, "r") as file:
             config = json.load(file)
         return cls.from_dict(config)
