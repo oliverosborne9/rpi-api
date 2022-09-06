@@ -36,7 +36,7 @@ class Scale(ABC):
 class FakeScale(Scale):
     def get_grams(self):
         time.sleep(0.2)
-        return randrange(-10, 500)  # nosec:B104
+        return randrange(-10, 500)  # nosec:B311
 
     def get_weight_tuple(self):
         return (
@@ -44,7 +44,7 @@ class FakeScale(Scale):
             "grams",
             datetime.utcnow(),
             self.path,
-            True if randrange(5) != 1 else False,  # nosec:B104
+            True if randrange(5) != 1 else False,  # nosec:B311
         )
 
 
