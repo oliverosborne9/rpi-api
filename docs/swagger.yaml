@@ -104,6 +104,12 @@ paths:
       summary: Dispense from a Container
       description: |-
         Queue a task to dispense, from one of the three available containers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DispenseRequestBody'
       responses:
         202:
           description: Task accepted
@@ -140,6 +146,21 @@ paths:
                 $ref: '#/components/schemas/TaskStatus'
 components:
   schemas:
+    TotalGrams:
+      type: integer
+      description: Total grams to dispense for completion of job
+      format: int64
+      example: 18
+    DispenseRequestBody:
+      type: object
+      properties:
+        colour:
+          type: string
+          description: |-
+            Name of colour-coded dispenser to use (blue, green or red)
+          example: "blue"
+        grams:
+          $ref: '#/components/schemas/TotalGrams'
     Twin:
       type: object
       properties:
@@ -232,10 +253,7 @@ components:
           format: int64
           example: 1
         total:
-          type: integer
-          description: Total grams to dispense for completion of job
-          format: int64
-          example: 18
+          $ref: '#/components/schemas/TotalGrams'
   responses:
     ScalesUnavailable:
       description: Scales offline
