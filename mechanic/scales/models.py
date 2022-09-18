@@ -3,7 +3,6 @@ from datetime import datetime
 from random import randrange
 
 from mechanic.scales.base import Scale
-from mechanic.scales.hid import DymoScale
 
 
 class FakeScale(Scale):
@@ -26,4 +25,4 @@ class FakeScale(Scale):
 # has been authored by @drew65 but is omitted from this project
 # because the code is intellectual property owned by Recycleye.
 
-SCALES_MODELS = {"FAKE": FakeScale, "DYMO": DymoScale}
+SCALES_MODELS = {"FAKE": FakeScale}
